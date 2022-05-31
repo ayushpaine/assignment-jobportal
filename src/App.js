@@ -4,7 +4,7 @@ import { ThemeProvider } from "@mui/material";
 import Header from "./components/Header";
 import { Grid } from "@mui/material";
 import SearchTag from "./components/SearchTag";
-import ModalJob from "./components/ModalJob";
+import ModalJob from "./components/modal/ModalJob";
 
 function App() {
   return (
