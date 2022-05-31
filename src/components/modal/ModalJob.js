@@ -12,6 +12,20 @@ import { useState } from "react";
 
 const ModalJob = () => {
   const [open, setOpen] = useState(true);
+  const [jobDetails, setJobDetails] = useState({
+    category: "",
+    companyName: "",
+    datePosted: "",
+    description: "",
+    duration: "",
+    functionalArea: "",
+    gradBatch: [],
+    jobTags: [],
+    jobTitle: "",
+    skills: [],
+    yrsOfExpReq: "",
+    location: "",
+  });
   return (
     <>
       <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
@@ -21,7 +35,7 @@ const ModalJob = () => {
             justifyContent="space-between"
             alignItems="center"
           >
-            Post Job
+            <Typography variant="h5">Post Job</Typography>
             <IconButton onClick={() => setOpen(false)}>
               <CloseIcon />
             </IconButton>
@@ -54,4 +68,4 @@ const ModalJob = () => {
   );
 };
 
-export default ModalJob;
+export default { ModalJob, jobDetails };

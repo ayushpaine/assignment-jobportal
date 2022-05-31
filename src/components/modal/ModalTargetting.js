@@ -9,6 +9,7 @@ import { FormControl } from "@mui/material";
 import { useState, useRef } from "react";
 import { FilledInput } from "@mui/material";
 import { Chip } from "@mui/material";
+import jobDetails from "../data/jobDetails";
 
 const ModalTargetting = () => {
   const [location, setLocation] = useState("");

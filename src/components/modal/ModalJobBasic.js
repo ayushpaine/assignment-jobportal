@@ -13,6 +13,7 @@ import { useState } from "react";
 import { MenuItem } from "@mui/material";
 import { Chip } from "@mui/material";
 import { useRef } from "react";
+import jobDetails from "../ModalJob/jobDetails";
 
 const ModalJobBasic = () => {
   const [checked, setChecked] = useState(false);
