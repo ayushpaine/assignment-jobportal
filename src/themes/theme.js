@@ -1,12 +1,11 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const primary = "#ffb8cd";
 const secondary = "#2d010c";
 
 export default createTheme({
-
   typography: {
-    fontFamily: 'Roboto Mono, monospace',
+    fontFamily: "Roboto Mono, monospace",
   },
   palette: {
     primary: {
@@ -15,7 +14,6 @@ export default createTheme({
     secondary: {
       main: secondary,
     },
-    
   },
   overrides: {
     MuiDialogActions: {
