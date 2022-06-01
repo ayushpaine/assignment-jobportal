@@ -1,14 +1,13 @@
 import React from "react";
-import { Box } from "@mui/system";
-import { Grid, Paper } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
-import theme from "../themes/theme";
 
 const Header = (props) => {
   return (
     <>
-      <Box
+      <Grid
+        container
         px={15}
         py={10}
         bgcolor="secondary.main"
@@ -17,22 +16,38 @@ const Header = (props) => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        m={1}
         borderRadius={5}
+        flex={1}
       >
-        <Box>
-          <Typography variant="h4">Job Portal</Typography>
-        </Box>
-        <Box>
+        <Grid
+          item
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+
+            alignSelf: "flex-end",
+          }}
+        >
+          <Typography variant="h4" align="center">
+            Job Portal
+          </Typography>
+        </Grid>
+        <Grid item>
           <Button
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              margin: "10px",
+              alignSelf: "flex-end",
+            }}
             variant="contained"
             disableElevation
             onClick={props.openNewModal}
           >
             Post New Job
           </Button>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
-import { makeStyles } from "@mui/material";
+import { useState } from "react";
 
 const SearchTag = () => {
   return (
@@ -35,7 +35,10 @@ const SearchTag = () => {
             Select Job Duration
           </InputLabel>
           <Select
+            onChange={handleChange}
             variant="filled"
+            value={search.duration}
+            name="duration"
             disableUnderline
             sx={{
               backgroundColor: "grey",

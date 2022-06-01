@@ -20,6 +20,8 @@ import { FormControl } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { Chip } from "@mui/material";
 import { useRef } from "react";
+import { Alert } from "@mui/material";
+import { Snackbar } from "@mui/material";
 import { db } from "../../firebase/config";
 import { collection } from "firebase/firestore";
 
@@ -133,7 +135,18 @@ const ModalJob = (props) => {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    for (const item in jobDetails) {
+      if (typeof jobDetails[item] === "string" && !jobDetails[item]) {
+        alert("Please fill all the required fields marked with a star");
+        return;
+      }
+      if (!jobDetails.skills.length) {
+        alert("Please fill all the required fields marked with a star");
+        return;
+      }
+    }
+
     setLoading(true);
     await props.postJob(jobDetails);
     closeModal();
@@ -315,7 +328,7 @@ const ModalJob = (props) => {
                         left: "-3px",
                       }}
                     >
-                      Select Max
+                      Select Maxchips
                     </InputLabel>
                     <Select
                       onChange={handleChange}
