@@ -1,5 +1,11 @@
 import React from "react";
-import { Button, Dialog, IconButton, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { DialogContent } from "@mui/material";
 import { DialogActions } from "@mui/material";
 import { DialogTitle } from "@mui/material";
@@ -14,17 +20,11 @@ import { FormControl } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { Chip } from "@mui/material";
 import { useRef } from "react";
+import { db } from "../../firebase/config";
+import { collection } from "firebase/firestore";
 
-const ModalJob = () => {
-  const [location1, setLocation1] = useState("");
-  const [chips1, setChips1] = useState([]);
-  const textInput1 = useRef(null);
-  const [location, setLocation] = useState("");
-  const [chips, setChips] = useState([]);
-  const textInput = useRef(null);
-
-  const [open, setOpen] = useState(true);
-  const [jobDetails, setJobDetails] = useState({
+const ModalJob = (props) => {
+  const initialState = {
     category: "",
     companyName: "",
     description: "",
@@ -38,7 +38,18 @@ const ModalJob = () => {
     minYrsExp: "",
     maxYrsExp: "",
     location: "",
-  });
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [location1, setLocation1] = useState("");
+  const [chips1, setChips1] = useState([]);
+  const textInput1 = useRef(null);
+  const [location, setLocation] = useState("");
+  const [chips, setChips] = useState([]);
+  const textInput = useRef(null);
+
+  const [open, setOpen] = useState(true);
+  const [jobDetails, setJobDetails] = useState(initialState);
 
   jobDetails.description = jobDetails.description.replace(/(\r\n|\n|\r)/gm, "");
 
@@ -104,6 +115,7 @@ const ModalJob = () => {
         return id !== index;
       });
     });
+
     setJobDetails((oldState) => ({
       ...oldState,
       jobTags: [
@@ -121,9 +133,23 @@ const ModalJob = () => {
     }));
   };
 
+  const handleSubmit = async () => {
+    setLoading(true);
+    await props.postJob(jobDetails);
+    closeModal();
+    setChips1([]);
+    setChips([]);
+  };
+
+  const closeModal = () => {
+    setJobDetails(initialState);
+    props.closeModal();
+    setLoading(false);
+  };
+
   return (
     <>
-      <Dialog open={open} onClose={() => setOpen(false)} fullWidth>
+      <Dialog open={props.jobModal} fullWidth>
         <DialogTitle>
           <Box
             display="flex"
@@ -132,7 +158,7 @@ const ModalJob = () => {
             onClick={() => setOpen(!open)}
           >
             <Typography variant="h5">Post Job</Typography>
-            <IconButton>
+            <IconButton onClick={closeModal}>
               <CloseIcon />
             </IconButton>
           </Box>
@@ -591,22 +617,24 @@ const ModalJob = () => {
                 onKeyDown={handleKeyDown}
                 inputRef={textInput}
               />
-              <Box marginTop={1}>
-                {chips.length !== 0
-                  ? chips.map((chip, i) => (
-                      <Chip
-                        color="secondary"
-                        key={i}
-                        label={chip}
-                        sx={{
-                          padding: "4px",
-                          margin: "2px",
-                        }}
-                        onDelete={() => handleDelete(i)}
-                      />
-                    ))
-                  : null}
-              </Box>
+              {
+                <Box marginTop={1}>
+                  {chips.length !== 0
+                    ? chips.map((chip, i) => (
+                        <Chip
+                          color="secondary"
+                          key={i}
+                          label={chip}
+                          sx={{
+                            padding: "4px",
+                            margin: "2px",
+                          }}
+                          onDelete={() => handleDelete(i)}
+                        />
+                      ))
+                    : null}
+                </Box>
+              }
             </Grid>
           </Grid>
         </DialogContent>
@@ -623,8 +651,18 @@ const ModalJob = () => {
             }}
           >
             <Typography variant="caption">*Required Fields</Typography>
-            <Button variant="contained" disableElevation color="primary">
-              Post Job
+            <Button
+              variant="contained"
+              disableElevation
+              color="primary"
+              onClick={handleSubmit}
+              disable={loading}
+            >
+              {loading ? (
+                <CircularProgress color="secondary" size="22" />
+              ) : (
+                "Post Job"
+              )}
             </Button>
           </Grid>
         </DialogActions>

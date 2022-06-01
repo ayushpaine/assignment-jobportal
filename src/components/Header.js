@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
 import theme from "../themes/theme";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <>
       <Box
@@ -24,7 +24,11 @@ const Header = () => {
           <Typography variant="h4">Job Portal</Typography>
         </Box>
         <Box>
-          <Button variant="contained" disableElevation>
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={props.openNewModal}
+          >
             Post New Job
           </Button>
         </Box>
