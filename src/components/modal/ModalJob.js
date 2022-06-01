@@ -20,10 +20,7 @@ import { FormControl } from "@mui/material";
 import { InputLabel } from "@mui/material";
 import { Chip } from "@mui/material";
 import { useRef } from "react";
-import { Alert } from "@mui/material";
-import { Snackbar } from "@mui/material";
-import { db } from "../../firebase/config";
-import { collection } from "firebase/firestore";
+import axios from "axios";
 
 const ModalJob = (props) => {
   const initialState = {
@@ -146,13 +143,14 @@ const ModalJob = (props) => {
     }
     const body = JSON.stringify(jobDetails);
 
-    fetch("http://localhost:8001/v1jobs/job", {
-      method: "POST",
-      body: body,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    axios
+      .post("http://localhost:8001/v1jobs/job", body)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     console.log(body);
     setLoading(true);
     await props.postJob(jobDetails);
@@ -173,13 +171,15 @@ const ModalJob = (props) => {
     }
     const body = JSON.stringify(jobDetails);
 
-    fetch("http://localhost:8001/v1jobs/job", {
-      method: "POST",
-      body: body,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    axios
+      .post("http://localhost:8001/v1jobs/job", body)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     console.log(body);
     setLoading(true);
     await props.postJob(jobDetails);
