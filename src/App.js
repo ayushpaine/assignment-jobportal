@@ -14,11 +14,13 @@ import { CircularProgress } from "@mui/material";
 import Card from "./components/Card";
 import { Search } from "@mui/icons-material";
 import { query, where } from "firebase/firestore";
+import JobDetails from "./components/modal/JobDetails";
 
 function App() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [jobModal, setJobModal] = useState(false);
+  const [jobInfo, setJobInfo] = useState({});
 
   const fetchJobs = async () => {
     setLoading(true);
@@ -28,25 +30,6 @@ function App() {
       id: job.id,
     }));
 
-    setJobs(tempJobs);
-    setLoading(false);
-  };
-
-  const fetchJobsCustom = async (search) => {
-    setLoading(true);
-
-    const req = query(
-      collection(db, "jobs"),
-      where("location", "==", search.location)
-    );
-
-    const querySnapshot = await getDocs(req);
-
-    const tempJobs = querySnapshot.docs.map((job) => ({
-      ...job.data(),
-      id: job.id,
-    }));
-    console.log(tempJobs);
     setJobs(tempJobs);
     setLoading(false);
   };
@@ -67,6 +50,8 @@ function App() {
         jobModal={jobModal}
         closeModal={() => setJobModal(false)}
       />
+      <JobDetails job={jobInfo} closeModal={() => setJobInfo({})} />
+
       <Grid container justify="center ">
         <Grid item xs={10}>
           {loading ? (
@@ -86,7 +71,9 @@ function App() {
               />
             </Box>
           ) : (
-            jobs.map((job) => <Card key={job.id} {...job} />)
+            jobs.map((job) => (
+              <Card open={() => setJobInfo(job)} key={job.id} {...job} />
+            ))
           )}
         </Grid>
       </Grid>

@@ -101,6 +101,7 @@ const Card = (props) => {
             </Grid>
             <Grid item>
               <Button
+                onClick={props.open}
                 variant="outline"
                 sx={{
                   color: "black",
