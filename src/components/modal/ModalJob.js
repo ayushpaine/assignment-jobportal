@@ -55,8 +55,6 @@ const ModalJob = (props) => {
 
   jobDetails.description = jobDetails.description.replace(/(\r\n|\n|\r)/gm, "");
 
-  console.log(jobDetails);
-
   const handleKeyDown1 = (e) => {
     if (
       location1.length > 0 &&
@@ -146,7 +144,16 @@ const ModalJob = (props) => {
         return;
       }
     }
+    const body = JSON.stringify(jobDetails);
 
+    fetch("http://localhost:8001/v1jobs/job", {
+      method: "POST",
+      body: body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(body);
     setLoading(true);
     await props.postJob(jobDetails);
     closeModal();
@@ -660,23 +667,27 @@ const ModalJob = (props) => {
               justifyContent: "space-between",
               alignItems: "center",
               width: "100%",
-              paddingX: "16px",
+              paddingX: "6px",
             }}
           >
-            <Typography variant="caption">*Required Fields</Typography>
-            <Button
-              variant="contained"
-              disableElevation
-              color="primary"
-              onClick={handleSubmit}
-              disable={loading}
-            >
-              {loading ? (
-                <CircularProgress color="secondary" size="22" />
-              ) : (
-                "Post Job"
-              )}
-            </Button>
+            <Grid item xs={4}>
+              <Typography variant="caption">*Required Fields</Typography>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                disableElevation
+                color="primary"
+                onClick={handleSubmit}
+                disable={loading}
+              >
+                {loading ? (
+                  <CircularProgress color="secondary" size="22" />
+                ) : (
+                  "Post Job"
+                )}
+              </Button>
+            </Grid>
           </Grid>
         </DialogActions>
       </Dialog>

@@ -127,24 +127,23 @@ const JobDetails = (props) => {
                 alignContent: "center",
               }}
             >
-              {
-                <Grid
-                  item
-                  container
-                  marginTop={1}
-                  sx={{
-                    display: "flex",
-                    flex: "1",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Grid item xs={2}>
-                    <Typography>Job Tags:</Typography>
-                  </Grid>
-                  <Grid item xs={10}>
-                    {props.job.jobTags ? (
-                      props.job.jobTags.map((skill, i) => (
+              <Grid
+                item
+                container
+                marginTop={1}
+                sx={{
+                  display: "flex",
+                  flex: "1",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Grid item xs={2}>
+                  <Typography>Job Tags:</Typography>
+                </Grid>
+                <Grid item xs={10}>
+                  {props.job.jobTags
+                    ? props.job.jobTags.map((skill, i) => (
                         <Chip
                           key={i}
                           color="primary"
@@ -155,12 +154,9 @@ const JobDetails = (props) => {
                           }}
                         />
                       ))
-                    ) : (
-                      <Typography>No tags</Typography>
-                    )}
-                  </Grid>
+                    : null}
                 </Grid>
-              }
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>
