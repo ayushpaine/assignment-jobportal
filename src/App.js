@@ -20,7 +20,6 @@ function App() {
     const tempJobs = req.docs.map((job) => ({
       ...job.data(),
       id: job.id,
-      datePosted: job.data().datePosted.toDate(),
     }));
 
     setJobs(tempJobs);

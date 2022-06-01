@@ -48,31 +48,7 @@ const SearchTag = () => {
             <MenuItem value="Intern">Intern</MenuItem>
           </Select>
         </FormControl>
-        <FormControl
-          sx={{
-            flex: "1",
-          }}
-        >
-          <InputLabel
-            sx={{
-              top: "-8px",
-            }}
-          >
-            Select Job Location
-          </InputLabel>
-          <Select
-            variant="filled"
-            disableUnderline
-            sx={{
-              backgroundColor: "grey",
-              flex: "1",
-              margin: "0px 10px",
-            }}
-          >
-            <MenuItem value="Remote">Remote</MenuItem>
-            <MenuItem value="On-Site">On-Site</MenuItem>
-          </Select>
-        </FormControl>
+
         <FormControl
           sx={{
             flex: "1",
