@@ -18,6 +18,8 @@ const Header = (props) => {
         alignItems="center"
         borderRadius={5}
         flex={1}
+        width="98%"
+        m={2}
       >
         <Grid
           item

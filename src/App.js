@@ -3,7 +3,6 @@ import "./App.css";
 import { ThemeProvider } from "@mui/material";
 import Header from "./components/Header";
 import { Grid } from "@mui/material";
-import SearchTag from "./components/SearchTag";
 import ModalJob from "./components/modal/ModalJob";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -14,7 +13,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { CircularProgress } from "@mui/material";
 import Card from "./components/Card";
 import { Search } from "@mui/icons-material";
-import { collection, query, where } from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 
 function App() {
   const [jobs, setJobs] = useState([]);
@@ -25,6 +24,25 @@ function App() {
     setLoading(true);
     const req = await getDocs(collection(db, "jobs"));
     const tempJobs = req.docs.map((job) => ({
+      ...job.data(),
+      id: job.id,
+    }));
+
+    setJobs(tempJobs);
+    setLoading(false);
+  };
+
+  const fetchJobsCustom = async (search) => {
+    setLoading(true);
+
+    const req = query(
+      collection(db, "jobs"),
+      where("location", "==", search.location)
+    );
+
+    const querySnapshot = await getDocs(req);
+
+    const tempJobs = querySnapshot.docs.map((job) => ({
       ...job.data(),
       id: job.id,
     }));
@@ -51,7 +69,6 @@ function App() {
       />
       <Grid container justify="center ">
         <Grid item xs={10}>
-          <SearchTag />
           {loading ? (
             <Box
               display="flex"

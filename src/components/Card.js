@@ -4,9 +4,14 @@ import { Grid } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Button } from "@mui/material";
 import { Chip } from "@mui/material";
+import { useState } from "react";
 
 const Card = (props) => {
   const skills = ["Lund", "Wund", "bund"];
+
+  const [search, setSearch] = useState({
+    type: "",
+  });
 
   return (
     <>
@@ -39,13 +44,13 @@ const Card = (props) => {
           >
             <Grid item>
               <Chip
-                label="Google"
+                label={props.companyName}
                 sx={{
                   fontSize: "1rem",
                 }}
               />
 
-              <Typography variant="h6">lund</Typography>
+              <Typography variant="h6">{props.jobTitle}</Typography>
             </Grid>
           </Grid>
           <Grid
@@ -67,7 +72,7 @@ const Card = (props) => {
                   justifyContent: "center",
                 }}
               >
-                {skills.map((skill, i) => (
+                {props.skills.map((skill, i) => (
                   <Chip
                     color="secondary"
                     key={i}
@@ -92,7 +97,7 @@ const Card = (props) => {
             }}
           >
             <Grid item>
-              <Typography variant="h6">Full Time</Typography>
+              <Typography variant="h6">{props.duration}</Typography>
             </Grid>
             <Grid item>
               <Button
