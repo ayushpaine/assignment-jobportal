@@ -160,6 +160,34 @@ const ModalJob = (props) => {
     setChips1([]);
     setChips([]);
   };
+  const handleSubmitAnother = async (e) => {
+    for (const item in jobDetails) {
+      if (typeof jobDetails[item] === "string" && !jobDetails[item]) {
+        alert("Please fill all the required fields marked with a star");
+        return;
+      }
+      if (!jobDetails.skills.length) {
+        alert("Please fill all the required fields marked with a star");
+        return;
+      }
+    }
+    const body = JSON.stringify(jobDetails);
+
+    fetch("http://localhost:8001/v1jobs/job", {
+      method: "POST",
+      body: body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log(body);
+    setLoading(true);
+    await props.postJob(jobDetails);
+    setJobDetails(initialState);
+    setChips1([]);
+    setChips([]);
+    setLoading(false);
+  };
 
   const closeModal = () => {
     setJobDetails(initialState);
@@ -685,6 +713,21 @@ const ModalJob = (props) => {
                   <CircularProgress color="secondary" size="22" />
                 ) : (
                   "Post Job"
+                )}
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                disableElevation
+                color="primary"
+                onClick={handleSubmitAnother}
+                disable={loading}
+              >
+                {loading ? (
+                  <CircularProgress color="secondary" size="22" />
+                ) : (
+                  "Post Job and Submit Another"
                 )}
               </Button>
             </Grid>
